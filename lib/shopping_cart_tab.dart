@@ -52,7 +52,7 @@ class _ShoppingCartTabState extends State<ShoppingCartTab> {
 
   Widget _buildEmailField() {
     return const CupertinoTextField(
-      prefix: const Icon(
+      prefix: Icon(
         CupertinoIcons.mail_solid,
         color: CupertinoColors.lightBackgroundGray,
         size: 28,
@@ -75,7 +75,7 @@ class _ShoppingCartTabState extends State<ShoppingCartTab> {
 
   Widget _buildLocationField() {
     return const CupertinoTextField(
-      prefix: const Icon(
+      prefix: Icon(
         CupertinoIcons.location_solid,
         color: CupertinoColors.lightBackgroundGray,
         size: 28,
@@ -181,20 +181,25 @@ class _ShoppingCartTabState extends State<ShoppingCartTab> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      Text(
-                        'Shipping '
-                          '${_currencyFormat.format(model.shippingCost)}',
-                        style: Styles.productRowItemPrice,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'Tax ${_currencyFormat.format(model.tax)}',
-                        style: Styles.productRowItemPrice,
-                      ),
-                      const SizedBox(height: 6),
-                      Text(
-                        'Total ${_currencyFormat.format(model.totalCost)}',
-                        style: Styles.productRowTotal,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: <Widget>[
+                          Text(
+                            'Shipping '
+                              '${_currencyFormat.format(model.shippingCost)}',
+                            style: Styles.productRowItemPrice,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Tax ${_currencyFormat.format(model.tax)}',
+                            style: Styles.productRowItemPrice,
+                          ),
+                          const SizedBox(height: 6),
+                          Text(
+                            'Total ${_currencyFormat.format(model.totalCost)}',
+                            style: Styles.productRowTotal,
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -269,11 +274,42 @@ class ShoppingCartItem extends StatelessWidget {
               ),
             ),
             Expanded(
-              
-            )
-          ]
-        )
-      )
-    )
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          product.name,
+                          style: Styles.productRowItemName,
+                        ),
+                        Text(
+                          '${formatter.format(quantity * product.price)}',
+                          style: Styles.productRowItemName,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 4,
+                    ),
+                    Text(
+                      '${quantity > 1 ? '$quantity x ' : ''}'
+                      '${formatter.format(product.price)}',
+                      style: Styles.productRowItemPrice,
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    return row;
   }
 }
